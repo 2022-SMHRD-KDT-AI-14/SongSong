@@ -1,19 +1,22 @@
 package View;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Date;
 
 import DB.Member;
 import DB.MemberDTO;
 import DB.MusicList;
+import DB.Rank;
 import javazoom.jl.player.MP3Player;
-//import DB.Rank;
-//import DB.RankDTO;
-//import java.util.Date;
-//import oracle.sql.DATE;
 
 public class ViewTest {
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in)); //선언
+		
+		
+//		Scanner sc = new Scanner(System.in);
 		Member dao = new Member(); // 회원정보 클래스
 		MemberDTO dto = new MemberDTO(null, null, null);
 		MusicList ml = new MusicList(); // 노래정보 클래스
@@ -22,67 +25,80 @@ public class ViewTest {
 		int cnt = 0;
 		int sum = 0;
 		int minus =0;
-//		Rank rank = new Rank();
+		int total =0;
+		Rank rank = new Rank();
 
 		String lv = null;
 		String path = null;
 		boolean stage1 = true;
-		boolean stage1_1 = true;
+		boolean stage1_1 = false;
 		boolean stage2 = false;
 		boolean stage3 = false;
+		boolean stage3_1 = false;
 		boolean stage4 = false;
-
+		boolean test=false;
+		
 		while (stage1) {
 			System.out.println("=====시작화면=====");
-			System.out.println("[1]회원가입 [2]로그인 [3]종료 ");
-			int menu = sc.nextInt();
-			if (menu == 1) {
+			System.out.println("[1]회원가입 [2]로그인 [3]연습게임 [4]랭크조회 [0]종료");
+			String menu = br.readLine(); //성능향상을위해 버퍼리더사용
+			if (menu.equals("1")) {
 				System.out.print("id입력>>");
-				dto.setId(sc.next());
+				dto.setId(br.readLine());
 				System.out.print("pw입력>>");
-				dto.setPw(sc.next());
+				dto.setPw(br.readLine());
 				System.out.print("이름입력>>");
-				dto.setName(sc.next());
+				dto.setName(br.readLine());
 				dao.insert(dto);
 
-			} else if (menu == 2) {
+			} else if (menu.equals("2")) {
 				System.out.print("id입력>>");
-				String id = sc.next();
+				String id = br.readLine();
 				dto.setId(id);
 				System.out.print("pw입력>>");
-				String pw =sc.next();
+				String pw =br.readLine();
 				dto.setPw(pw);
 				dao.login(dto);
 				if (id.equals(dto.getId()) &&  pw.equals(dto.getPw())) { 
 					stage1 = false; //입력값과 테이블값 일치해야 다음페이지로 넘어감
 					stage1_1 = true;
 				}
-			} else if (menu == 3) {
+			} else if (menu.equals("0")) {
 				System.out.println("종료되었습니다.");
 				stage1 = false;
 
-			} else {
+			} else if (menu.equals("3")) {
+				System.out.println("연습게임 모드입니다.");
+				test = true;
+				stage1 = false;
+				stage2 = true;
+
+			}else if(menu.equals("4")) {
+				rank.show();
+			}
+			
+			else {
 				System.out.println("잘못 누르셨습니다.");
 			}
 		} // stage1끝
 
 		while (stage1_1) {
 			System.out.println("[1]회원정보수정\t[2]게임이동\t[3]랭킹조회 ");
-			int menu1_1 = sc.nextInt();
-			if (menu1_1 == 1) {
+			String menu1_1 = br.readLine();
+			if (menu1_1.equals("1")) {
 				System.out.println("[1]비밀번호 수정	[2]이름 수정");
-				int P_N = sc.nextInt();
-				if(P_N==1 || P_N==2){
+				String P_N = br.readLine();
+				if(P_N.equals("1") || P_N.equals("2")){
 					System.out.println("수정할 값>>");
-					String text = sc.next();
+					String text = br.readLine();
 					dao.Adjust(dto, P_N, text);
 				}else {
 					System.out.println("잘못 누르셨습니다.");
 				}
-			} else if (menu1_1 == 2) { // 게임
+			} else if (menu1_1.equals("2")) { // 게임
 				stage1_1 = false;
 				stage2 = true;
-			} else if (menu1_1 == 3) {
+			} else if (menu1_1.equals("3")) {
 				System.out.println("랭킹조회"); //혜수 메소드
 
 			} else {
@@ -94,13 +110,15 @@ public class ViewTest {
 		while (stage2) {
 			System.out.println("=====게임 준비=====");
 			System.out.println("[1]게임룰설명\t[2]난이도설정 후 게임시작");
-			int menu2 =sc.nextInt();
-			if(menu2 == 1) {
+			String menu2 = br.readLine();
+			if(menu2.equals("1")) {
+				System.out.println("점수 배분 방식 : ~ ~");
+				System.out.println("정답은 띄어쓰기 없이, 영문의 경우 대문자만 허용");
 				System.out.println("어찌고 저찌고~");
-			}else if(menu2 ==2) {
+			}else if(menu2.equals("2")) {
 				System.out.println("난이도 번호를 선택해주세요");
 				System.out.println("[1]상	[2]중	[3]하");
-				lv = sc.next();
+				lv = br.readLine();
 				if (lv.equals("1")) {
 					score = 7;
 					stage2 = false;
@@ -123,22 +141,22 @@ public class ViewTest {
 		
 		}
 
-	while(stage3)
-
-	{
-		for (int i = 1; i <= 3; i++) {
-			if (mp3.isPlaying()) {
-				mp3.stop();
-			}
+	while(stage3){
+		
+		long stTime = new Date().getTime();
+	
+			
+		for (int i = 1; i <= 5; i++) {
 			System.out.println(i + "번째 문제입니다.");
 			path = ml.diff(lv); // 선택한 난이도의 랜덤곡 추출
 			System.out.println(path);
-
+			
 			while (true) {
-				mp3.play(path);
+				if(mp3.isPlaying()) mp3.stop(); //왜 자꾸 노래가 들릴까..
 				System.out.print("정답입력>>");
+				mp3.play(path);
 				System.out.print("[0]스킵		[1]초성힌트	[2]가수힌트>>");
-				String ans = sc.next();
+				String ans = br.readLine();
 				if (ans.equals(ml.getTitle(path))) {
 					System.out.println("정답*^^*");
 					cnt++;
@@ -154,27 +172,50 @@ public class ViewTest {
 				} else {
 					System.out.println("오답");
 				}
+				
+			}//한 문제당 while문 끝
 
-			}
-
+		}//문제반복 for문끝
+		if(mp3.isPlaying()) { 
+			mp3.stop();
+			mp3.play("C:/Users/smhrd/Desktop/MP3/effect/관짝밈.mp3");
 		}
 		stage3 = false;
-		stage4 = true;
-		System.out.println("게임종료");
-		// 채점 : 서영종
-		System.out.println(minus);
-		sum = cnt * score;
-		System.out.println(sum);
-		System.out.println("총점은: " + (sum-minus));
-
+		stage3_1 = true;
+	
+		while(stage3_1) {
+			
+			System.out.println("=============게임종료=============");
+			if(minus<0) minus=0;
+			sum = cnt * score;
+			total = sum-minus;
+			System.out.println("총점은: " + total);
+			System.out.println("재도전하시겠습니까?  ");
+			System.out.println("[1]아니오 [2]예, 재도전! ");
+			String memu3_3 = br.readLine();
+			if(memu3_3.equals("1")) { // 아니오 선택시
+				stage4= true;
+			}else { //재도전 선택시
+				stage3 =true;
+			}
+			stage3_1=false;
+			if(mp3.isPlaying()) mp3.stop();
+				
+		}
 	}
-
-	while(stage4)
+	
+	
+	while(stage4 && !test)
 	{
-//		rank.scoreUpdate(dto,100);
+		
+				if(mp3.isPlaying()) mp3.stop();
+				System.out.println("===============랭킹화면===============");
+				rank.scoreUpdate1(dto,total);
+				stage4=false;
 	}
+	System.out.println("시스템 종료");
 
-	sc.close();
+//	sc.close();
 }// main끝
 
 }// 맨끝

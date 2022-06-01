@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import DB.MemberDTO;
 
 public class Member {
 
@@ -15,6 +14,7 @@ public class Member {
 	PreparedStatement psmt;
 	ResultSet rs;
 
+	
 	// 계정생성 메소드
 	public void insert(MemberDTO dto) {
 
@@ -32,6 +32,7 @@ public class Member {
 			psmt.setString(4, "");
 			psmt.executeUpdate();
 			System.err.println(name + "님~ 가입을 축하합니다^^");
+			updateForRank(dto);
 		} catch (SQLException e) {
 			System.out.println("회원가입 실패, id를 새롭게 만들어주세요");
 		}
@@ -105,12 +106,12 @@ public class Member {
 	}
 
 	// 회원정보수정 메소드
-	public void Adjust(MemberDTO dto, int P_N, String text) { 
+	public void Adjust(MemberDTO dto, String P_N, String text) { 
 
 		connectMember();
 		String sql = null;
 		// 3. SQL문 실행
-		if (P_N == 1) { // 비번수정
+		if (P_N.equals("1")) { // 비번수정
 			sql = "update member set set =? where id=?";
 		} else { // 이름수정
 			sql = "update member set name =? where id=?";
@@ -171,6 +172,38 @@ public class Member {
 		} catch (SQLException e) {
 			System.out.println("DB연결 실패");
 		}
+	}
+
+	
+	//회원가입시 랭크DB 자동업데이트
+	public void updateForRank(MemberDTO dto) {
+
+		connectMember();
+		// 3. SQL실행
+		String id = dto.getId();
+		String sql = "insert into rank values(?,null)";
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			psmt.executeUpdate();
+			System.err.println("업데이트 완료");
+		} catch (SQLException e) {
+			System.out.println("업데이트 실패");
+		}
+
+		// 4. 종료
+		finally {
+			try {
+				if (psmt != null)
+					psmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 
 }

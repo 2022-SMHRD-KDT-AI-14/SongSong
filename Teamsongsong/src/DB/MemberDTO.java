@@ -13,16 +13,12 @@ public class MemberDTO {
 		this.name = name;
 	}
 	
-	
 	//생성자 오버로딩
 	public MemberDTO(String id, String pw) {
 		super();
 		this.id = id;
 		this.pw = pw;
 	}
-
-
-
 
 	public String getId() {
 		return id;

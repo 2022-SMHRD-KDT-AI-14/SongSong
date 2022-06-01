@@ -24,7 +24,6 @@ public class MusicList {
 	public String diff(String str) {
 
 		String path = null;
-		String diffLv = null;
 		connectMusic();
 		String sql = "select path from (select * from musiclist where diff = ? order by dbms_random.value) where rownum <= 1";
 
@@ -85,6 +84,7 @@ System.out.println(str);
 
 	}
 
+	// 음악재생 메소드
 	public void play(String path) {
 
 		mp3 = new MP3Player();
@@ -95,6 +95,7 @@ System.out.println(str);
 
 	}
 
+	// 정답확인(노래제목) 메소드
 	public String getTitle(String ingPath) {
 
 		connectMusic();
@@ -139,6 +140,7 @@ System.out.println(str);
 
 	}
 
+	//가수힌트 메소드
 	public void SingHint(String path) {
 
 		connectMusic();
@@ -205,6 +207,7 @@ System.out.println(str);
 		}
 	}
 
+	// 초성힌트 메소드
 	public void ChoHint(String path) {
 		final String[] CHO = { "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ", "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ",
 				"ㅎ" };

@@ -6,6 +6,31 @@ name varchar2(200) not null,
 score number(38),
 constraint member_id_pk primary key(id));
 
+drop table rank;
+create table rank
+(id varchar2(200),  
+score number(38),
+constraint rank_id_fk foreign key(id) references member(id)
+);
+
+
+insert into rank
+values('jojo',null);
+insert into rank
+
+update rank set score =80 where id ='jojo'
+
+select * from rank;
+
+insert into rank values( 'jojo',22)
+update member set score =90 where id = 'jojo';
+select * from member;
+
+
+
+
+insert into member values('test','test','Å×½ºÆ®',null);
+insert into rank values('test',30)
 
 
 drop table musiclist;
@@ -17,6 +42,12 @@ diff varchar2(300) not null,
 constraint musiclist_path_pk primary key(path),
 constraint musiclist_diff_ck check(diff in('»ó','Áß','ÇÏ'))
 );	
+
+commit();
+rollback();
+update member
+set score =80
+where id ='jojo';
 
 
 select * from member;
@@ -32,8 +63,8 @@ select *from musiclist where singer ='Ä«¶ó'
 delete from musiclist where singer ='·¹µåº§¹î'
 
 update musiclist
-set title ='MYRHYTHM'
-path= 'C:/Users/smhrd/Desktop/MP3/music/·¹µåº§ºª - MYRHYTHM'
+set title ='FEELMYRHYTHM',
+path= 'C:/Users/smhrd/Desktop/MP3/music/·¹µåº§ºª - FEELMYRHYTHM.mp3'
 where singer ='·¹µåº§ºª'
 
 
@@ -60,7 +91,7 @@ values('CAMO','CAMO - LIFEISWET','C:/Users/smhrd/Desktop/MP3/music/Ä«¸ð - LIFEIS
 insert into musiclist
 values('ºò¹ð','º½¿©¸§°¡À»°Ü¿ï','C:/Users/smhrd/Desktop/MP3/music/ºò¹ð - º½¿©¸§°¡À»°Ü¿ï.mp3','Áß');
 insert into musiclist
-values('·¹µåº§¹î','FEELMYRHYTHM','C:/Users/smhrd/Desktop/MP3/music/·¹µåº§ºª - MYRHYTHM.mp3','Áß');
+values('·¹µåº§¹î','FEELMYRHYTHM','C:/Users/smhrd/Desktop/MP3/music/·¹µåº§ºª - FEELMYRHYTHM.mp3','Áß');
 insert into musiclist
 values('¸á·Î¸Á½º','ÃëÁß°í¹é','C:/Users/smhrd/Desktop/MP3/music/¸á·Î¸Á½º - ÃëÁß°í¹é.mp3','Áß');
 insert into musiclist

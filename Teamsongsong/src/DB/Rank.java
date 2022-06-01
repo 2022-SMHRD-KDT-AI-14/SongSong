@@ -56,26 +56,42 @@ public class Rank {
 		}
 	}
 	
-	
-	public void scoreUpdate(MemberDTO dto, int SUM) { // 최종 sum 값을 해당 아이디에 score 값 갱신(새로 한 게임의 점수가 더 클 때만)
+	public void show()
+	{
+		connectRank();
+		String sql = "select * from rank";
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			System.out.println("드라이버 연결 성공!");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
-		String db_id = "hr";
-		String db_pw = "hr";
-		try {
-			conn = DriverManager.getConnection(url, db_id, db_pw);
-			if (conn != null) {
-				System.out.println("DB 연결 성공!");
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+			while(rs.next()) {
+				String id = rs.getString(1);
+				int score = rs.getInt(2);
+				System.out.printf("%s 의 점수 : %d\n", id, score);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (psmt != null) {
+					psmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+	public void scoreUpdate(MemberDTO dto, int SUM) { // 최종 sum 값을 해당 아이디에 score 값 갱신(새로 한 게임의 점수가 더 클 때만)
+		int cnt =0;
+		connectRank();
 //----------------------------------------------------------------------------------------
 //		sum = 2;
 		String sql = "update member set score = ? where id = ?";
@@ -107,29 +123,73 @@ public class Rank {
 			}
 		}
 	}
+		
 	
 	
-	
-	
-	
-	public void rank() {    // score 상위 3명 값 출력
+	public void scoreUpdate1(MemberDTO dto, int total) { // 최종 sum 값을 해당 아이디에 score 값 갱신(새로 한 게임의 점수가 더 클 때만)
+		connectRank();
+		
+		System.out.println("접속아이디: "+dto.getId());
+		System.out.println("받은점수:"+total);
+		
+		
+		String sql = "update rank set score= ? where id = ?";
+		
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, total);
+			psmt.setString(2, dto.getId());
+			int cnt = psmt.executeUpdate();
+			System.out.println("변화된 행의 수 "+cnt);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (psmt != null) {
+					psmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+
+	private void connectRank() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
-			System.out.println("드라이버 연결 성공!");
+//			System.out.println("드라이버 연결 성공!");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
-		String db_id = "hr";
-		String db_pw = "hr";
+		String url = "jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
+		String db_id = "campus_e_0516_3";
+		String db_pw = "smhrd3";
+
+		
+		
 		try {
 			conn = DriverManager.getConnection(url, db_id, db_pw);
 			if (conn != null) {
-				System.out.println("DB 연결 성공!");
+//				System.out.println("DB 연결 성공!");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+		
+	
+	
+	
+	public void rank() {    // score 상위 3명 값 출력
+		connectRank();
 		 
 		String sql = "select rownum, id, score from (select id, score from member order by score desc) where rownum < 4";
 		try {
