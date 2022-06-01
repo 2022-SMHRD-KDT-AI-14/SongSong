@@ -24,7 +24,12 @@ select * from rank;
 
 insert into rank values( 'jojo',22)
 update member set score =90 where id = 'jojo';
+
+select * from rank;
+--jojo cucu nana test
+delete member where id in('yoyo','hoho');
 select * from member;
+
 
 
 

@@ -29,7 +29,6 @@ public class MusicList {
 
 		try {
 			psmt = conn.prepareStatement(sql);
-System.out.println(str);
 			if (str.equals("1")) {
 				psmt.setString(1, "상");
 			} else if (str.equals("2")) {
@@ -140,7 +139,7 @@ System.out.println(str);
 
 	}
 
-	//가수힌트 메소드
+	// 가수힌트 메소드
 	public void SingHint(String path) {
 
 		connectMusic();

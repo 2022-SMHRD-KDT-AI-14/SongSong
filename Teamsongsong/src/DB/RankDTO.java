@@ -8,6 +8,7 @@ public class RankDTO {
 	private String update;
 	
 	
+	
 	public void setId(String id) {
 		this.id = id;
 	}

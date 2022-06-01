@@ -13,6 +13,19 @@ public class MemberDTO {
 		this.name = name;
 	}
 	
+	//로그아웃 메소드
+	public void signOut() {
+		if(id != null) {
+			id = null;
+			pw = null;
+			name = null;
+			System.out.println("로그아웃 되었습니다.");
+		}else {
+			System.out.println("로그인이 필요합니다.");
+		}
+	}
+	
+	
 	//생성자 오버로딩
 	public MemberDTO(String id, String pw) {
 		super();
