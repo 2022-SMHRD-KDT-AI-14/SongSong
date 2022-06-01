@@ -22,8 +22,8 @@ constraint musiclist_diff_ck check(diff in('상','중','하'))
 select * from member;
 select * from musiclist;
 
-select path from musiclist where diff ='상' order by RAND()
-select path from (select * from musiclist where diff = '상' order by dbms_random.value) where rownum <= 1;
+--select path from musiclist where diff ='상' order by RAND()
+--select path from (select * from musiclist where diff = '상' order by dbms_random.value) where rownum <= 1;
 
 select *from musiclist where singer ='CAMO'
 select *from musiclist where singer ='카라'
