@@ -26,7 +26,7 @@ public class ViewTest {
 		int sum = 0;
 		int minus = 0;
 		int total = 0;
-		Rank rank = new Rank();
+		Rank rk = new Rank();
 
 		String lv = null;
 		String path = null;
@@ -62,10 +62,12 @@ public class ViewTest {
 				dto.setPw(pw);
 				dao.login(dto);
 				if (id.equals(dto.getId()) && pw.equals(dto.getPw())) {
+					System.out.println(dto.getId() + "님의 전 점수 : " + rk.scoreput(dto));
 					stage1 = false; // 입력값과 테이블값 일치해야 다음페이지로 넘어감
 					stage1_1 = true;
 				}
 			} else if (menu.equals("0")) {
+				System.out.println("종료되었습니다.");
 				stage1 = false;
 
 			} else if (menu.equals("3")) {
@@ -77,8 +79,8 @@ public class ViewTest {
 				stage1 = false;
 				stage2 = true;
 
-			} else if (menu.equals("5")) { // 임시로만든거임
-				rank.show();
+			} else if (menu.equals("5")) {
+				rk.top10();
 			}
 
 			else {
@@ -103,6 +105,7 @@ public class ViewTest {
 					stage2 = true;
 				} else if (menu1_1.equals("3")) {
 					System.out.println("랭킹조회"); // 혜수 메소드
+					rk.top10();
 
 				} else {
 					System.out.println("잘못입력, 다시선택해주세요!");
@@ -192,12 +195,17 @@ public class ViewTest {
 					if (minus < 0)
 						minus = 0;
 					sum = cnt * score;
-					total = sum - minus;
+					total = sum + minus;
 					float convert =(float)Math.round((total*(60/gap))*100)/100;
 					System.out.println("총점은: " + total+"점");
 					System.out.println("맞은개수: " +cnt+"개");
 					System.out.println("풀이시간: " + gap+"초");
 					System.out.println("1분당 환산점수: " + convert+"점");
+					
+					if(rk.scoreput(dto) < total) {        // 전 점수와 비교해서 큰 값으로 값 갱신
+						rk.scoreUpdate(dto, total);
+					}
+					
 					System.out.println("재도전하시겠습니까?  ");
 					System.out.println("[1]아니오 [2]예, 재도전! ");
 					String memu3_3 = br.readLine();
@@ -217,7 +225,7 @@ public class ViewTest {
 				if (mp3.isPlaying())
 					mp3.stop();
 				System.out.println("===============랭킹화면===============");
-				rank.scoreUpdate1(dto, total);
+				rk.top10();
 				stage4 = false;
 				System.out.println("[1]시작화면 [2]종료");
 				String menu4 = br.readLine();

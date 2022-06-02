@@ -4,6 +4,7 @@ public class MemberDTO {
 	private String id;
 	private String pw;
 	private String name;
+	private int score;
 	
 	
 	public MemberDTO(String id, String pw, String name) {
@@ -50,6 +51,12 @@ public class MemberDTO {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 }

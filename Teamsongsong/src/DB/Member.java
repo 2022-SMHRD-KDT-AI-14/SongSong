@@ -32,7 +32,7 @@ public class Member {
 			psmt.setString(4, "");
 			psmt.executeUpdate();
 			System.err.println(name + "님~ 가입을 축하합니다^^");
-			updateForRank(dto);
+//			updateForRank(dto);
 		} catch (SQLException e) {
 			System.out.println("회원가입 실패, id를 새롭게 만들어주세요");
 		}
@@ -175,35 +175,37 @@ public class Member {
 	}
 
 	
-	//회원가입시 랭크DB 자동업데이트
-	public void updateForRank(MemberDTO dto) {
-
-		connectMember();
-		// 3. SQL실행
-		String id = dto.getId();
-		String sql = "insert into rank values(?,null)";
-		try {
-			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, id);
-			psmt.executeUpdate();
-			System.err.println("업데이트 완료");
-		} catch (SQLException e) {
-			System.out.println("업데이트 실패");
-		}
-
-		// 4. 종료
-		finally {
-			try {
-				if (psmt != null)
-					psmt.close();
-				if (conn != null)
-					conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-		}
-
-	}
+//	//회원가입시 랭크DB 자동업데이트
+//	public void updateForRank(MemberDTO dto) {
+//
+//		connectMember();
+//		// 3. SQL실행
+//		String id = dto.getId();
+//		String sql = "insert into rank values(?,null)";
+//		try {
+//			psmt = conn.prepareStatement(sql);
+//			psmt.setString(1, id);
+//			psmt.executeUpdate();
+//			System.err.println("업데이트 완료");
+//		} catch (SQLException e) {
+//			System.out.println("업데이트 실패");
+//		}
+//
+//		// 4. 종료
+//		finally {
+//			try {
+//				if (psmt != null)
+//					psmt.close();
+//				if (conn != null)
+//					conn.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//
+//		}
+//
+//	}
+//	
+//	
 
 }

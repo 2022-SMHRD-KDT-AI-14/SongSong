@@ -1,52 +1,18 @@
-drop table member;
-create table member
-(id varchar2(200) not null, 
-pw varchar2(200) not null, 
-name varchar2(200) not null, 
-score number(38),
-constraint member_id_pk primary key(id));
-
-drop table rank;
-create table rank
-(id varchar2(200),  
-score number(38),
-constraint rank_id_fk foreign key(id) references member(id)
-);
-
-
-insert into rank
-values('jojo',null);
-insert into rank
-
-update rank set score =80 where id ='jojo'
-
-select * from rank;
-
-insert into rank values( 'jojo',22)
-update member set score =90 where id = 'jojo';
-
-select * from rank;
---jojo cucu nana test
-delete member where id in('yoyo','hoho');
+drop table member cascade constraints;
+drop table rank cascade constraints;  -- 지우기
+drop table musiclist cascade constraints;
+-----------------------------------------------------------
 select * from member;
+select * from rank;  -- 지우기
+select * from musiclist;
+-----------------------------------------------------------
+create table member (id varchar2(200) not null, pw varchar2(200) not null, name varchar2(200) not null, score number(38),constraint member_id_pk primary key(id));
+create table musiclist (singer varchar2(300) not null,title varchar2(300) not null,path varchar2(500) not null,diff varchar2(300) not null,constraint musiclist_path_pk primary key(path),constraint musiclist_diff_ck check(diff in('상','중','하')));	
+-- score 5등까지 뽑아오기(같은 score 있으면 다음 순위는 +1 ex.2등 2명 -> 다음 순위는 4등)------------------------------------------------------
+select id, score, rnk from (select id, score, rank() over (order by score desc) as rnk from member where score!=null) where rnk <= 5;
+select id, score, rnk from (select id, score, rank() over (order by score desc) as rnk from member );
+------------------------------------------------------------
 
-
-
-
-
-insert into member values('test','test','테스트',null);
-insert into rank values('test',30)
-
-
-drop table musiclist;
-create table musiclist
-(singer varchar2(300) not null,
-title varchar2(300) not null,
-path varchar2(500) not null,
-diff varchar2(300) not null,
-constraint musiclist_path_pk primary key(path),
-constraint musiclist_diff_ck check(diff in('상','중','하'))
-);	
 
 commit();
 rollback();
@@ -55,24 +21,9 @@ set score =80
 where id ='jojo';
 
 
-select * from member;
-select * from musiclist;
-
---select path from musiclist where diff ='상' order by RAND()
---select path from (select * from musiclist where diff = '상' order by dbms_random.value) where rownum <= 1;
-
-select *from musiclist where singer ='CAMO'
-select *from musiclist where singer ='카라'
 
 
-delete from musiclist where singer ='레드벨뱃'
-
-update musiclist
-set title ='FEELMYRHYTHM',
-path= 'C:/Users/smhrd/Desktop/MP3/music/레드벨벳 - FEELMYRHYTHM.mp3'
-where singer ='레드벨벳'
-
-
+-- 노래 삽입 -------------------------------------------------------------------------------------------------
 insert into musiclist
 values('탑현','호랑수월가','C:/Users/smhrd/Desktop/MP3/music/탑현 - 호랑수월가.mp3','상');
 insert into musiclist
@@ -271,3 +222,94 @@ insert into musiclist
 values('첸','사월이지나면우리헤어져요','C:/Users/smhrd/Desktop/MP3/music/첸 - 사월이지나면우리헤어져요.mp3','상');
 insert into musiclist
 values('태연','들불','C:/Users/smhrd/Desktop/MP3/music/태연 - 들불.mp3','상');
+insert into musiclist
+values('MC몽','서커스','C:/Users/smhrd/Desktop/MP3/music/MC몽 - 서커스.mp3','하');
+insert into musiclist
+values('MC몽','인디언보이','C:/Users/smhrd/Desktop/MP3/music/MC몽 - 인디언보이.mp3','하');
+insert into musiclist
+values('MC몽','죽을만큼아파서','C:/Users/smhrd/Desktop/MP3/music/MC몽 - 죽을만큼아파서.mp3','하');
+insert into musiclist
+values('동방신기','주문','C:/Users/smhrd/Desktop/MP3/music/동방신기 - 주문.mp3','하');
+insert into musiclist
+values('손담비','미쳤어','C:/Users/smhrd/Desktop/MP3/music/손담비 - 미쳤어.mp3','하');
+insert into musiclist
+values('씨스타','SOCOOL','C:/Users/smhrd/Desktop/MP3/music/씨스타 - SOCOOL.mp3','하');
+insert into musiclist
+values('씨스타','나혼자','C:/Users/smhrd/Desktop/MP3/music/씨스타 - 나혼자.mp3','하');
+insert into musiclist
+values('엄정화','DISCO','C:/Users/smhrd/Desktop/MP3/music/엄정화 - DISCO.mp3','하');
+insert into musiclist
+values('이승철','그사람','C:/Users/smhrd/Desktop/MP3/music/이승철 - 그사람.mp3','하');
+insert into musiclist
+values('이효리','10MINUTES','C:/Users/smhrd/Desktop/MP3/music/이효리 - 10MINUTES.mp3','하');
+insert into musiclist
+values('이효리','UGOGIRL','C:/Users/smhrd/Desktop/MP3/music/이효리 - UGOGIRL.mp3','하');
+insert into musiclist
+values('임재범','낙인','C:/Users/smhrd/Desktop/MP3/music/임재범 - 낙인.mp3','하');
+insert into musiclist
+values('쥬얼리','ONEMORETIME','C:/Users/smhrd/Desktop/MP3/music/쥬얼리 - ONEMORETIME.mp3','하');
+insert into musiclist
+values('티아라','왜이러니','C:/Users/smhrd/Desktop/MP3/music/티아라 - 왜이러니.mp3','하');
+insert into musiclist
+values('티아라','처음처럼','C:/Users/smhrd/Desktop/MP3/music/티아라 - 처음처럼.mp3','하');
+insert into musiclist
+values('레드벨벳','러시안룰렛','C:/Users/smhrd/Desktop/MP3/music/레드벨벳 - 러시안룰렛.mp3','중');
+insert into musiclist
+values('방탄소년단','FAKELOVE','C:/Users/smhrd/Desktop/MP3/music/방탄소년단 - FAKELOVE.mp3','중');
+insert into musiclist
+values('브레이브걸스','운전만해','C:/Users/smhrd/Desktop/MP3/music/브레이브걸스 - 운전만해.mp3','중');
+insert into musiclist
+values('스테이씨','ASAP','C:/Users/smhrd/Desktop/MP3/music/스테이씨 - ASAP.mp3','중');
+insert into musiclist
+values('싸이','NEWFACE','C:/Users/smhrd/Desktop/MP3/music/싸이 - NEWFACE.mp3','중');
+insert into musiclist
+values('아이유','EIGHT','C:/Users/smhrd/Desktop/MP3/music/아이유 - EIGHT.mp3','중');
+insert into musiclist
+values('아이즈원','라비앙로즈','C:/Users/smhrd/Desktop/MP3/music/아이즈원 - 라비앙로즈.mp3','중');
+insert into musiclist
+values('여자친구','오늘부터우리는','C:/Users/smhrd/Desktop/MP3/music/여자친구 - 오늘부터우리는.mp3','중');
+insert into musiclist
+values('영탁','찐이야','C:/Users/smhrd/Desktop/MP3/music/영탁 - 찐이야.mp3','중');
+insert into musiclist
+values('오마이걸','DOLPHIN','C:/Users/smhrd/Desktop/MP3/music/오마이걸 - DOLPHIN.mp3','중');
+insert into musiclist
+values('오마이걸','살짝설렜어','C:/Users/smhrd/Desktop/MP3/music/오마이걸 - 살짝설렜어.mp3','중');
+insert into musiclist
+values('오반','어떻게지내','C:/Users/smhrd/Desktop/MP3/music/오반 - 어떻게지내.mp3','중');
+insert into musiclist
+values('이수현','ALIEN','C:/Users/smhrd/Desktop/MP3/music/이수현 - ALIEN.mp3','중');
+insert into musiclist
+values('전소미','DUMBDUMB','C:/Users/smhrd/Desktop/MP3/music/전소미 - DUMBDUMB.mp3','중');
+insert into musiclist
+values('태연','WEEKEND','C:/Users/smhrd/Desktop/MP3/music/태연 - WEEKEND.mp3','중');
+insert into musiclist
+values('다비치','괜찮아사랑이야','C:/Users/smhrd/Desktop/MP3/music/다비치 - 괜찮아사랑이야.mp3','상');
+insert into musiclist
+values('로제','ONTHEGROUND','C:/Users/smhrd/Desktop/MP3/music/로제 - ONTHEGROUND.mp3','상');
+insert into musiclist
+values('멜로망스','좋은날','C:/Users/smhrd/Desktop/MP3/music/멜로망스 - 좋은날.mp3','상');
+insert into musiclist
+values('백예린','BYEBYEMYBLUE','C:/Users/smhrd/Desktop/MP3/music/백예린 - BYEBYEMYBLUE.mp3','상');
+insert into musiclist
+values('샘김','숨','C:/Users/smhrd/Desktop/MP3/music/샘김 - 숨.mp3','상');
+insert into musiclist
+values('엔시티','STICKER','C:/Users/smhrd/Desktop/MP3/music/엔시티 - STICKER.mp3','상');
+insert into musiclist
+values('여자아이들','화','C:/Users/smhrd/Desktop/MP3/music/여자아이들 - 화.mp3','상');
+insert into musiclist
+values('위너','MILLIONS','C:/Users/smhrd/Desktop/MP3/music/위너 - MILLIONS.mp3','상');
+insert into musiclist
+values('위클리','AFTERSCHOOL','C:/Users/smhrd/Desktop/MP3/music/위클리 - AFTERSCHOOL.mp3','상');
+insert into musiclist
+values('윤미래','TOUCHLOVE','C:/Users/smhrd/Desktop/MP3/music/윤미래 - TOUCHLOVE.mp3','상');
+insert into musiclist
+values('이달의소녀','PTT','C:/Users/smhrd/Desktop/MP3/music/이달의소녀 - PTT.mp3','상');
+insert into musiclist
+values('조유리','GLASSY','C:/Users/smhrd/Desktop/MP3/music/조유리 - GLASSY.mp3','상');
+insert into musiclist
+values('청하','KILLINGME','C:/Users/smhrd/Desktop/MP3/music/청하 - KILLINGME.mp3','상');
+insert into musiclist
+values('투애니원','아파','C:/Users/smhrd/Desktop/MP3/music/투애니원 - 아파.mp3','상');
+insert into musiclist
+values('펀치','영화속에나오는주인공처럼','C:/Users/smhrd/Desktop/MP3/music/펀치 - 영화속에나오는주인공처럼.mp3','상');
+

@@ -11,39 +11,28 @@ public class Rank {
 	PreparedStatement psmt;
 	ResultSet rs;
 	int cnt = 0;
-	public void input(MemberDTO dto) {    //	 최종 sum 값을 해당 아이디에 score 값 삽입
+	int result = 0;
+	
+	public int scoreput(MemberDTO dto) {    // 로그인 한 아이디의 갱신 전 score값 result 값으로 반환
+		connectRank();
+
+		String sql = "select score from member where id = ?";
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDrive"
-					+ "r");
-			System.out.println("드라이버 연결 성공!");
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		String url = "jdbc:oracle:thin:@127.0.0.1:1521:xe";
-		String db_id = "hr";
-		String db_pw = "hr";
-		try {
-			conn = DriverManager.getConnection(url, db_id, db_pw);
-			if (conn != null) {
-				System.out.println("DB 연결 성공!");
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		 
-		String sql = "update member set score = ? where id = ?";
-		try {
-			String iid = dto.getId();
-			sum = 1;
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(score, sum);
-			psmt.setString(1, iid);
-			cnt = psmt.executeUpdate();
+			psmt.setString(1, dto.getId());
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				result = rs.getInt(1);
+			}
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				
+				if (rs != null) {
+					rs.close();
+				}
 				if (psmt != null) {
 					psmt.close();
 				}
@@ -54,24 +43,27 @@ public class Rank {
 				e.printStackTrace();
 			}
 		}
+		return result;
 	}
-	
-	public void show()
-	{
+		
+	public void top10() {    // score 상위 10명 값 출력
 		connectRank();
-		String sql = "select * from rank";
+		String sql = "select id, score, rnk from (select id, score, rank() over (order by score desc) as rnk from member) where rnk <= 10";
 		try {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
-			while(rs.next()) {
+			System.out.println("================상위 10명 랭킹================");
+			System.out.printf("%10s\t%10s\t%10s%n","ID", "SCORE", "RANK");
+			while (rs.next()) {
 				String id = rs.getString(1);
 				int score = rs.getInt(2);
-				System.out.printf("%s 의 점수 : %d\n", id, score);
+				int rr = rs.getInt(3);
+				
+				System.out.printf("%10s\t%10s\t%10s\t%n", id, score, rr );
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		finally {
+		} finally {
 			try {
 				if (rs != null) {
 					rs.close();
@@ -88,60 +80,17 @@ public class Rank {
 		}
 	}
 
-
-	public void scoreUpdate(MemberDTO dto, int SUM) { // 최종 sum 값을 해당 아이디에 score 값 갱신(새로 한 게임의 점수가 더 클 때만)
-		int cnt =0;
+	public void scoreUpdate(MemberDTO dto, int total) { // 최종 sum 값(변수 jhs)을 해당 아이디에 score 값 갱신 //(새로 한 게임의 점수가 더 클 때만)
 		connectRank();
-//----------------------------------------------------------------------------------------
-//		sum = 2;
+
 		String sql = "update member set score = ? where id = ?";
 		try {
-			psmt = conn.prepareStatement(sql);
-			
-			
-//			psmt.setString(1, SUM);
-			psmt.setInt(1, SUM);
-			psmt.setString(2, dto.getId());
-//			rs = psmt.executeQuery();
-			cnt = psmt.executeUpdate();
-			System.out.println(cnt);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (psmt != null) {
-					psmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-		
-	
-	
-	public void scoreUpdate1(MemberDTO dto, int total) { // 최종 sum 값을 해당 아이디에 score 값 갱신(새로 한 게임의 점수가 더 클 때만)
-		connectRank();
-		
-		System.out.println("접속아이디: "+dto.getId());
-		System.out.println("받은점수:"+total);
-		
-		
-		String sql = "update rank set score= ? where id = ?";
-		
-		try {
+			String id = dto.getId();
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, total);
-			psmt.setString(2, dto.getId());
-			int cnt = psmt.executeUpdate();
-			System.out.println("변화된 행의 수 "+cnt);
-			
+			psmt.setString(2, id);
+			cnt = psmt.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -160,6 +109,79 @@ public class Rank {
 			}
 		}
 	}
+	
+
+//	public void scoreUpdate(MemberDTO dto, int SUM) { // 최종 sum 값을 해당 아이디에 score 값 갱신(새로 한 게임의 점수가 더 클 때만)
+//		int cnt =0;
+//		connectRank();
+////----------------------------------------------------------------------------------------
+////		sum = 2;
+//		String sql = "update member set score = ? where id = ?";
+//		try {
+//			psmt = conn.prepareStatement(sql);
+//			
+//			
+////			psmt.setString(1, SUM);
+//			psmt.setInt(1, SUM);
+//			psmt.setString(2, dto.getId());
+////			rs = psmt.executeQuery();
+//			cnt = psmt.executeUpdate();
+//			System.out.println(cnt);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (rs != null) {
+//					rs.close();
+//				}
+//				if (psmt != null) {
+//					psmt.close();
+//				}
+//				if (conn != null) {
+//					conn.close();
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+//		
+//	
+//	
+//	public void scoreUpdate1(MemberDTO dto, int total) { // 최종 sum 값을 해당 아이디에 score 값 갱신(새로 한 게임의 점수가 더 클 때만)
+//		connectRank();
+//		
+//		System.out.println("접속아이디: "+dto.getId());
+//		System.out.println("받은점수:"+total);
+//		
+//		
+//		String sql = "update rank set score= ? where id = ?";
+//		
+//		try {
+//			psmt = conn.prepareStatement(sql);
+//			psmt.setInt(1, total);
+//			psmt.setString(2, dto.getId());
+//			int cnt = psmt.executeUpdate();
+//			System.out.println("변화된 행의 수 "+cnt);
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				if (rs != null) {
+//					rs.close();
+//				}
+//				if (psmt != null) {
+//					psmt.close();
+//				}
+//				if (conn != null) {
+//					conn.close();
+//				}
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 
 	private void connectRank() {
@@ -173,8 +195,6 @@ public class Rank {
 		String db_id = "campus_e_0516_3";
 		String db_pw = "smhrd3";
 
-		
-		
 		try {
 			conn = DriverManager.getConnection(url, db_id, db_pw);
 			if (conn != null) {
@@ -184,45 +204,7 @@ public class Rank {
 			e.printStackTrace();
 		}
 	}
-		
-	
-	
-	
-	public void rank() {    // score 상위 3명 값 출력
-		connectRank();
-		 
-		String sql = "select rownum, id, score from (select id, score from member order by score desc) where rownum < 4";
-		try {
-			psmt = conn.prepareStatement(sql);
-			rs = psmt.executeQuery();
-			System.out.println("=======상위 3명 랭킹=======");
-			System.out.printf("%10s\t%10s\t%10s%n", "RANK","ID", "SCORE");
-			while (rs.next()) {
-				int indd = rs.getInt(1);
-				String id = rs.getString(2);
-				int score = rs.getInt(3);
-				
-				System.out.printf("%10s\t%10s\t%10s\t%n", indd, id, score);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (rs != null) {
-					rs.close();
-				}
-				if (psmt != null) {
-					psmt.close();
-				}
-				if (conn != null) {
-					conn.close();
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
+
 	
 	
 }
