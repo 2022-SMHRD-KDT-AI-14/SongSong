@@ -168,7 +168,7 @@ public class ViewTest {
 			while (stage3) {
 
 				beforeTime =System.currentTimeMillis();
-				for (int i = 1; i <= 5; i++) {
+				for (int i = 1; i <= 10; i++) {
 					System.out.println(i + "번째 문제입니다.");
 					path = ml.diff(lv); // 선택한 난이도의 랜덤곡 추출
 					System.out.println(path);
@@ -176,10 +176,13 @@ public class ViewTest {
 					while (true) {
 						if (mp3.isPlaying())
 							mp3.stop(); // 왜 자꾸 노래가 들릴까..
-						System.out.print("정답입력>>");
 						mp3.play(path);
+						System.out.print("정답입력>>");
 						System.out.print("[0]스킵		[1]초성힌트	[2]가수힌트>>");
 						String ans = br.readLine();
+						if(ans != null) {
+							mp3.stop();
+						}
 						if (ans.equals(ml.getTitle(path))) {
 							System.out.println("정답*^^*");
 							cnt++;
@@ -204,9 +207,10 @@ public class ViewTest {
 				gap =(afterTime-beforeTime)/1000.00;
 				
 				System.out.println(gap);
+				System.out.println(path);
 				System.out.println("=============게임오버=============");
 				if (mp3.isPlaying()) mp3.stop();
-				mp3.play("C:/Users/smhrd/Desktop/MP3/effect/관짝밈.mp3");
+				//mp3.play("C:/Users/smhrd/Desktop/MP3/effect/관짝밈.mp3");
 				stage3 = false;
 				stage3_1 = true;
 				while (stage3_1) {

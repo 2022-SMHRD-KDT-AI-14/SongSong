@@ -13,6 +13,12 @@ select id, score, rnk from (select id, score, rank() over (order by score desc) 
 select id, score, rnk from (select id, score, rank() over (order by score desc) as rnk from member );
 ------------------------------------------------------------
 
+insert into musiclist
+values('벤','열애중', 'C:/Users/smhrd/Desktop/MP3/music/벤 - 열애중.mp3','하')
+delete musiclist
+where title ='TT'
+
+
 
 commit();
 rollback();
