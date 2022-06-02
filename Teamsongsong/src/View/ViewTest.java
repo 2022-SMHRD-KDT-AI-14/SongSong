@@ -37,12 +37,13 @@ public class ViewTest {
 	static boolean test = false;
 
 	public static void main(String[] args) throws IOException {
-
+		art();
 		while (stage1) {
+			
 			if (mp3.isPlaying())
 				mp3.stop();
 			mp3.play("C:/Users/smhrd/Desktop/MP3/effect/오프닝.mp3");
-			System.out.println("=====시작화면=====");
+			System.out.println("================시작화면================");
 			System.out.println("[1]회원가입 [2]로그인 [3]로그아웃 \n[4]연습게임 [5]랭크조회 [0]종료");
 			STAGE1();// 회원가입 및 로그인 메서드
 
@@ -52,8 +53,8 @@ public class ViewTest {
 			} // stage1_1끝
 
 			while (stage2) {
-				System.out.println("=====게임 준비=====");
-				System.out.println("[1]게임룰설명\t[2]난이도설정 후 게임시작\t[3]뒤로가기");
+				System.out.println("================게임 준비================");
+				System.out.println("[1]게임룰설명\t[2]난이도설정 후 게임시작");
 				STAGE2();
 			}
 
@@ -77,6 +78,39 @@ public class ViewTest {
 	
 	
 	
+	public static void art() {
+		System.out.println("\n\t\t찾아가는 서비스");
+		System.out.println("\r\n"
+				+ "\r\n"
+				+ "                                                                                          \r\n"
+				+ "                 ~,                    --                    ~-                           \r\n"
+				+ "                 @;     .!!!!!!!!!!!!  *#           ;:       #=                           \r\n"
+				+ "    $$$$$$$$$$~  @;     .@@@@@@@@@@@@  *#           $=       #=       ,$$$$$$$$$$$$$$$    \r\n"
+				+ "    ,,,,,,,,,@~  @;        =@    @!    *#           $=       #=       ,######@@@######    \r\n"
+				+ "            .#~  @;        =@,  .@!    *#          ,##       #=              -@!          \r\n"
+				+ "            ,#-  @;        =@*  *@!    *#          ;@#       #=              $@!          \r\n"
+				+ "       *=   ~$.  @;       :@:$  @@#-   *@$$!       *@@!      #@$$$          ~@##-         \r\n"
+				+ "       $#   *=   @;       ;@ @!,@-@~   *@##*      ~@,@$,     #@@@@          =@,@#.        \r\n"
+				+ "       $#   #=   @=;;:   ~@- ,#@$ ;@-  *#        ~@*  $*,    #=           ,*$  ~##-       \r\n"
+				+ "       $#   :~   @=;;~  ,#*.  !@, ,$@~ *#       :@$,  .$$;   #=          ;==.   ~@#~      \r\n"
+				+ "       $#        @;     .$.  ,#;   ,@$ *#     .!@#,    .$@:  #=        :=@;.     ,:@$=    \r\n"
+				+ "  *@@@@@@@@@@@@, @;          @*        *#      !~            #=       @@#    .=:   .=@#   \r\n"
+				+ "  ;===========!. @;                    ~:                    *!        .     .@;          \r\n"
+				+ "                 @;        ~;;;;;;;;;;;;:           :;;;!;;;:                .@;          \r\n"
+				+ "     .~          @;        =@@@@@@@@@@@@#         ,*@@;---;@@=               .@;          \r\n"
+				+ "     ~@,         @;                    =#         *@,       -@=              .@;          \r\n"
+				+ "     ~@,                               *#        .@:         !@:     ,,,,,,,,-@!,,,,,,,,  \r\n"
+				+ "     ~@,                               *#        .@:         ,@;     @@@@@@@@@@@@@@@@@@@~ \r\n"
+				+ "     ~@,                               *#        .#$.        $$.     ~~~~~~~~~~~~~~~~~~~. \r\n"
+				+ "     ~@@###########,                   *#         ~@@=     !@@-                           \r\n"
+				+ "     -$$$$$$$$$$$$$,                   *#          .=$#@@@#$$                             \r\n"
+				+ "                                       :;             .~:~.                               \r\n"
+				+ "                                                                                          \r\n"
+				+ "                                                                                          \r\n"
+				+ "");
+	}
+	
+
 	public static void STAGE1() throws IOException {
 		
 		String menu = br.readLine(); // 성능향상을위해 버퍼리더사용
@@ -123,7 +157,6 @@ public class ViewTest {
 	}// STAGE1 끝
 
 	
-	
 
 	public static void STAGE1_1() throws IOException {
 		String menu1_1 = br.readLine();
@@ -159,7 +192,6 @@ public class ViewTest {
 	}// STAGE1_1 끝
 	
 	
-	
 
 	public static void STAGE2() throws IOException {
 		String menu2 = br.readLine();
@@ -169,15 +201,10 @@ public class ViewTest {
 		} else if (menu2.equals("2")) {
 			Level();// 난이도 설정 메서드
 
-		} else if (menu2.equals("3")) {
-			stage2 = false;
-			stage1 = true;
-			stage1_1 = true;
 		} else {
 			System.out.println("잘못 입력하셨습니다.");
 		}
 	} //STAGE2 끝
-	
 	
 	
 	public static void STAGE3() throws IOException{
@@ -200,7 +227,6 @@ public class ViewTest {
 
 	}// stage3 끝
 		
-	
 	
 	
 	public static void STAGE3_1() throws IOException{
@@ -229,7 +255,6 @@ public class ViewTest {
 	
 	} //STAGE3_1 끝
 	
-
 	
 	public static void STAGE4() throws IOException{
 		if (mp3.isPlaying())
@@ -258,6 +283,8 @@ public class ViewTest {
 
 	}
 
+	
+	
 	public static void Level() throws IOException {
 		System.out.println("난이도 번호를 선택해주세요");
 		System.out.println("[1]상	[2]중	[3]하");
@@ -280,8 +307,7 @@ public class ViewTest {
 	}
 
 	
-	
-	
+		
 	public static void Hint() throws IOException {
 		while (true) {
 			if (mp3.isPlaying())
@@ -313,8 +339,7 @@ public class ViewTest {
 			}
 		}
 	}
-	
-	
+
 	
 
 	public static void Calcu() throws IOException {
