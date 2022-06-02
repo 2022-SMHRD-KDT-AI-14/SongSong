@@ -95,7 +95,7 @@ public class MusicList {
 	}
 
 	// 정답확인(노래제목) 메소드
-	public String getTitle(String ingPath) {
+	public String getTitle(String path) {
 
 		connectMusic();
 		String result = null;
@@ -104,7 +104,7 @@ public class MusicList {
 
 		try {
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, ingPath);
+			psmt.setString(1, path);
 			// ?는 반드시 execute전에 설정되어 있어야 함.
 			rs = psmt.executeQuery();
 
@@ -139,6 +139,47 @@ public class MusicList {
 
 	}
 
+	
+	public void letMeKnow(String path) {
+		connectMusic();
+		// 3. SQL문 실행
+		String sql = "select singer, title from musiclist where path= ?";
+
+		try {
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, path);
+			// ?는 반드시 execute전에 설정되어 있어야 함.
+			rs = psmt.executeQuery();
+
+			if (rs.next()) {
+				System.out.printf("정답: %s - %s\n\n",rs.getString(1),rs.getString(2));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("sql문 이상함");
+		} finally {
+			// 4. 연결종료
+			// rs,psmt,conn순으로 닫기
+
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (psmt != null) {
+					psmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (final SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+	}
+	
+	
 	// 가수힌트 메소드
 	public void SingHint(String path) {
 

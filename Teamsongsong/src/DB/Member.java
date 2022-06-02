@@ -111,7 +111,7 @@ public class Member {
 		String sql = null;
 		// 3. SQL문 실행
 		if (P_N.equals("1")) { // 비번수정
-			sql = "update member set set =? where id=?";
+			sql = "update member set pw =? where id=?";
 		} else { // 이름수정
 			sql = "update member set name =? where id=?";
 		}
