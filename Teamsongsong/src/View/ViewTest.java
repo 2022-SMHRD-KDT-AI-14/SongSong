@@ -35,18 +35,19 @@ public class ViewTest {
 	static boolean stage3_1 = false;
 	static boolean stage4 = false;
 	static boolean test = false;
-
+	static String ans3;
+	
 	public static void main(String[] args) throws IOException {
 		art();
 		while (stage1) {
-			
-			if (mp3.isPlaying())
-				mp3.stop();
-			mp3.play("C:/Users/smhrd/Desktop/MP3/effect/오프닝.mp3");
-			System.out.println("================시작화면================");
-			System.out.println("[1]회원가입 [2]로그인 [3]로그아웃 \n[4]연습게임 [5]랭크조회 [0]종료");
-			STAGE1();// 회원가입 및 로그인 메서드
-
+			if(!stage1_1) { //stage2에서 stage1_1로 뒤로가기 기능을 위해 조건문필요
+				if (mp3.isPlaying())
+					mp3.stop();
+				mp3.play("C:/Users/smhrd/Desktop/MP3/effect/오프닝.mp3");
+				System.out.println("================시작화면================");
+				System.out.println("[1]회원가입 [2]로그인 [3]로그아웃 \n[4]연습게임 [5]랭크조회 [0]종료");
+				STAGE1();// 회원가입 및 로그인 메서드
+			}
 			while (stage1_1) {
 				System.out.println("[1]회원정보수정\t[2]게임이동\t[3]랭킹조회\t[4]뒤로가기 ");
 				STAGE1_1();// 회원정보수정 & 게임시작메서드
@@ -161,21 +162,29 @@ public class ViewTest {
 	public static void STAGE1_1() throws IOException {
 		String menu1_1 = br.readLine();
 		if (menu1_1.equals("1")) {
-			System.out.println("[1]비밀번호 수정	[2]이름 수정  [3]회원탈퇴");
-			String P_N = br.readLine();
-			if (P_N.equals("1") || P_N.equals("2")) {
-				System.out.println("수정할 값>>");
-				String text = br.readLine();
-				dao.Adjust(dto, P_N, text);
-			} else if (P_N.equals("3")) {
-
-				dao.delete(dto);
-				stage1_1 = false;
-				stage1 = true;
-			} else {
-				System.out.println("잘못 누르셨습니다.");
+			
+			while(true) {
+				System.out.println("[1]비밀번호 수정\t[2]이름 수정\t[3]회원탈퇴\t[4]뒤로가기");
+				String P_N = br.readLine();
+				if (P_N.equals("1") || P_N.equals("2")) {
+					System.out.print("수정할 값>> ");
+					String text = br.readLine();
+					dao.Adjust(dto, P_N, text);
+					break;
+				} else if (P_N.equals("3")) {
+					dao.delete(dto);
+					stage1_1 = false;
+					stage1 = true;
+				}else if (P_N.equals("4")) {
+					break;
+				} else {
+					System.out.println("잘못 누르셨습니다.");
+				}
 			}
-		} else if (menu1_1.equals("2")) { // 게임
+		
+		
+		}
+		else if (menu1_1.equals("2")) { // 게임
 			stage1_1 = false;
 			stage2 = true;
 		} else if (menu1_1.equals("3")) {
@@ -201,27 +210,33 @@ public class ViewTest {
 		} else if (menu2.equals("2")) {
 			Level();// 난이도 설정 메서드
 
+		}  else if (menu2.equals("3")) { 
+			stage2= false;
+			stage1 =true;
+			stage1_1 =true;
 		} else {
 			System.out.println("잘못 입력하셨습니다.");
 		}
 	} //STAGE2 끝
 	
 	
+	
 	public static void STAGE3() throws IOException{
+		if (mp3.isPlaying())
+			mp3.stop();
 		beforeTime = System.currentTimeMillis();
 		for (int i = 1; i <= 10; i++) {
 			System.out.println(i + "번째 문제입니다.");
 			path = ml.diff(lv); // 선택한 난이도의 랜덤곡 추출
-			Hint();// 힌트 선택 메서드
+			SubmitAns();//답안선택 메서드
 
 		} // 문제반복 for문끝
 		afterTime = System.currentTimeMillis();
 		gap = (afterTime - beforeTime) / 1000.00;
-		System.out.println("=============게임오버=============");
+		System.out.println("================게임오버================");
 		if (mp3.isPlaying()) {
 			mp3.stop();
 		}
-//		mp3.play("C:/Users/smhrd/Desktop/MP3/effect/관짝밈.mp3");
 		stage3 = false;
 		stage3_1 = true;
 
@@ -249,16 +264,14 @@ public class ViewTest {
 			stage3 = true;
 		}
 		stage3_1 = false;
-		if (mp3.isPlaying())
-			mp3.stop();
+		
 
 	
 	} //STAGE3_1 끝
 	
 	
+	
 	public static void STAGE4() throws IOException{
-		if (mp3.isPlaying())
-			mp3.stop();
 		rk.top10();
 		stage4 = false;
 		System.out.println("[1]시작화면 [2]종료");
@@ -267,6 +280,7 @@ public class ViewTest {
 			stage1 = true;
 	
 		} else { // 종료
+			if(mp3.isPlaying()) mp3.stop();
 			stage1 = false;
 		}
 	}//STAGE4 끝
@@ -308,35 +322,41 @@ public class ViewTest {
 
 	
 		
-	public static void Hint() throws IOException {
+	public static void SubmitAns() throws IOException {
+				
 		while (true) {
-			if (mp3.isPlaying())
-				mp3.stop(); // 왜 자꾸 노래가 들릴까..
-			mp3.play(path);
+			MP3Player mp3_1 =new MP3Player();
+			 
+			if (mp3_1.isPlaying()) {
+				mp3_1.stop(); // 왜 자꾸 노래가 들릴까..
+			} mp3_1.play(path);
+			
 			System.out.print("정답입력>>");
 			System.out.print("[0]스킵		[1]초성힌트	[2]가수힌트>>");
-			String ans = br.readLine();
-			if (ans != null) {
+			
+			ans3 = br.readLine();
+			if (ans3 != null) {
 				mp3.stop();
 			}
-			if (ans.equals(ml.getTitle(path))) {
+			if (ans3.equals(ml.getTitle(path))) {
 				System.out.println("******참 잘하셨어요******");
 				ml.letMeKnow(path);
 				cnt++;
 				break;
-			} else if (ans.equals("0")) {
+			} else if (ans3.equals("0")) {
 				ml.letMeKnow(path);
 				break;
-			} else if (ans.equals("1")) {
+			} else if (ans3.equals("1")) {
 				ml.ChoHint(path);
 				minus -= 2;
-			} else if (ans.equals("2")) {
+			} else if (ans3.equals("2")) {
 				ml.SingHint(path);
 				minus -= 1;
 			} else {
 				System.out.println("오답");
 
 			}
+			
 		}
 	}
 
