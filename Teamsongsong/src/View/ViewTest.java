@@ -41,28 +41,28 @@ public class ViewTest {
 		art();
 		while (stage1) {
 			if(!stage1_1) { //stage2에서 stage1_1로 뒤로가기 기능을 위해 조건문필요
-				if (mp3.isPlaying())
-					mp3.stop();
-				mp3.play("C:/Users/smhrd/Desktop/MP3/effect/오프닝.mp3");
-				System.out.println("================시작화면================");
-				System.out.println("[1]회원가입 [2]로그인 [3]로그아웃 \n[4]연습게임 [5]랭크조회 [0]종료");
+				System.out.println("=============================== HELLO ===============================");
+				System.out.println("[1]회원가입\t[2]로그인\t[3]로그아웃\n[4]연습게임\t[5]랭크조회\t[0]종료");
 				STAGE1();// 회원가입 및 로그인 메서드
 			}
 			while (stage1_1) {
+				System.out.println("============================== MY PAGE ==============================");
 				System.out.println("[1]회원정보수정\t[2]게임이동\t[3]랭킹조회\t[4]뒤로가기 ");
 				STAGE1_1();// 회원정보수정 & 게임시작메서드
 			} // stage1_1끝
 
 			while (stage2) {
-				System.out.println("================게임 준비================");
-				System.out.println("[1]게임룰설명\t[2]난이도설정 후 게임시작");
+				System.out.println("========================== ARE YOU READY? ===========================");
+				System.out.println("[1]게임룰설명\t[2]난이도설정 후 게임시작\t[3]뒤로가기");
 				STAGE2();
 			}
 
 			while (stage3) {
+				System.out.println("============================ GAME START! ============================");
 					STAGE3();
 				
 				while (stage3_1) {
+				System.out.println("============================= GAME OVER =============================");
 					STAGE3_1();
 				}
 			}
@@ -80,40 +80,36 @@ public class ViewTest {
 	
 	
 	public static void art() {
-		System.out.println("\n\t\t찾아가는 서비스");
+		System.out.println("\n\t알아서 찾아가는 서비스");
 		System.out.println("\r\n"
 				+ "\r\n"
-				+ "                                                                                          \r\n"
-				+ "                 ~,                    --                    ~-                           \r\n"
-				+ "                 @;     .!!!!!!!!!!!!  *#           ;:       #=                           \r\n"
-				+ "    $$$$$$$$$$~  @;     .@@@@@@@@@@@@  *#           $=       #=       ,$$$$$$$$$$$$$$$    \r\n"
-				+ "    ,,,,,,,,,@~  @;        =@    @!    *#           $=       #=       ,######@@@######    \r\n"
-				+ "            .#~  @;        =@,  .@!    *#          ,##       #=              -@!          \r\n"
-				+ "            ,#-  @;        =@*  *@!    *#          ;@#       #=              $@!          \r\n"
-				+ "       *=   ~$.  @;       :@:$  @@#-   *@$$!       *@@!      #@$$$          ~@##-         \r\n"
-				+ "       $#   *=   @;       ;@ @!,@-@~   *@##*      ~@,@$,     #@@@@          =@,@#.        \r\n"
-				+ "       $#   #=   @=;;:   ~@- ,#@$ ;@-  *#        ~@*  $*,    #=           ,*$  ~##-       \r\n"
-				+ "       $#   :~   @=;;~  ,#*.  !@, ,$@~ *#       :@$,  .$$;   #=          ;==.   ~@#~      \r\n"
-				+ "       $#        @;     .$.  ,#;   ,@$ *#     .!@#,    .$@:  #=        :=@;.     ,:@$=    \r\n"
-				+ "  *@@@@@@@@@@@@, @;          @*        *#      !~            #=       @@#    .=:   .=@#   \r\n"
-				+ "  ;===========!. @;                    ~:                    *!        .     .@;          \r\n"
-				+ "                 @;        ~;;;;;;;;;;;;:           :;;;!;;;:                .@;          \r\n"
-				+ "     .~          @;        =@@@@@@@@@@@@#         ,*@@;---;@@=               .@;          \r\n"
-				+ "     ~@,         @;                    =#         *@,       -@=              .@;          \r\n"
-				+ "     ~@,                               *#        .@:         !@:     ,,,,,,,,-@!,,,,,,,,  \r\n"
-				+ "     ~@,                               *#        .@:         ,@;     @@@@@@@@@@@@@@@@@@@~ \r\n"
-				+ "     ~@,                               *#        .#$.        $$.     ~~~~~~~~~~~~~~~~~~~. \r\n"
-				+ "     ~@@###########,                   *#         ~@@=     !@@-                           \r\n"
-				+ "     -$$$$$$$$$$$$$,                   *#          .=$#@@@#$$                             \r\n"
-				+ "                                       :;             .~:~.                               \r\n"
-				+ "                                                                                          \r\n"
-				+ "                                                                                          \r\n"
+				+ "                                                                      \r\n"
+				+ "             @-               ~$               :#                     \r\n"
+				+ "   $$$$$$$$ -@   =@@@@@@@@@@@ ~#        ~$     :#      !!!!!!!!!!!!   \r\n"
+				+ "   .......@. @-      #;  -@   ~#        ~$     :#      $$$$$#@$$$$$   \r\n"
+				+ "          #  @-      #$  ;@   ~#        *@     :#           =@        \r\n"
+				+ "     .;  ,$  @-     ,@$  @@-  ~#;:.     @@-    :@;;        ,@@-       \r\n"
+				+ "     -@  :=  @~     ~#:#-=$!  ~@#$.    =*$=    :@##.       =*$@       \r\n"
+				+ "     -@  !*  @#$$  ~@. !@~ @! ~#      =@. *=.  :#        .$;  *#,     \r\n"
+				+ "     -@      @-    =:  :=  ~@-~#    .*@,   *@, :#      ,~#!    *#;~   \r\n"
+				+ " .@@@@@@@@@@ @-       ;#      ~#     *         :#     =@#   -=   ;@;  \r\n"
+				+ "  ~~~~~~~~~, @-               .,           .   ,~      .    ~#        \r\n"
+				+ "    ..       @-      #@@@@@@@@@#       .;@$==$@!            ~#        \r\n"
+				+ "    **       @-      .........:#       $=.    .*$           ~#        \r\n"
+				+ "    ==                        ~#      .@       ,@-   .;;;;;;=@;;;;;;; \r\n"
+				+ "    ==                        ~#      .@.      -@-   .$$$$$$$$$$$$$$= \r\n"
+				+ "    =@$$$$$$$$$               ~#       =@=    =#:                     \r\n"
+				+ "    :!!!!!!!!!!               ~#        -!*$$*!-                      \r\n"
+				+ "                                                                      \r\n"
+				+ "                                                                      \r\n"
 				+ "");
 	}
 	
 
 	public static void STAGE1() throws IOException {
-		
+		if (mp3.isPlaying())
+			mp3.stop();
+		mp3.play("C:/Users/smhrd/Desktop/MP3/effect/오프닝.mp3");
 		String menu = br.readLine(); // 성능향상을위해 버퍼리더사용
 		if (menu.equals("1")) {
 			System.out.print("id입력>>");
@@ -160,6 +156,7 @@ public class ViewTest {
 	
 
 	public static void STAGE1_1() throws IOException {
+		
 		String menu1_1 = br.readLine();
 		if (menu1_1.equals("1")) {
 			
@@ -233,7 +230,6 @@ public class ViewTest {
 		} // 문제반복 for문끝
 		afterTime = System.currentTimeMillis();
 		gap = (afterTime - beforeTime) / 1000.00;
-		System.out.println("================게임오버================");
 		if (mp3.isPlaying()) {
 			mp3.stop();
 		}
@@ -252,7 +248,7 @@ public class ViewTest {
 		}
 
 		System.out.println("재도전하시겠습니까?  ");
-		System.out.println("[1]아니오 [2]예, 재도전! ");
+		System.out.println("[1]아니오\t[2]예, 재도전! ");
 		String memu3_3 = br.readLine();
 		if (memu3_3.equals("1")) { // 아니오 선택시
 			stage4 = true;
@@ -274,7 +270,7 @@ public class ViewTest {
 	public static void STAGE4() throws IOException{
 		rk.top10();
 		stage4 = false;
-		System.out.println("[1]시작화면 [2]종료");
+		System.out.println("[1]시작화면\t[2]종료");
 		String menu4 = br.readLine();
 		if (menu4.equals("1")) {
 			stage1 = true;
@@ -290,7 +286,7 @@ public class ViewTest {
 	public static void Rule() throws IOException {
 		System.out.println("게임시작 ▶ 난이도 선택 ▶ 문제풀기 ▶ 랭킹확인");
 		System.out.println("→ 난이도별 점수배분방식 :한 문제당 상 10점, 중 8점, 하 6점\n  초성힌트 -2점\t가수명힌트 -1점");
-		System.out.println("→ 힌트종류 : ① 한글제목:초성힌트/영어제목:시작&끝 알파벳제시 \n  \t   ② 가수명힌트");
+		System.out.println("→ 힌트종류 : ① 한글제목:초성힌트/영어제목:처음부터 두개의 알파벳제시 \n  \t   ② 가수명힌트");
 		System.out.println("→ 문항수 : 10문제, 시간제한없고 모르는 문제는 패스가능");
 		System.out.println("→ 정답작성시 주의사항 : 띄어쓰기X, 영어제목 : 대문자로 기입");
 		System.out.println("→ 랭킹 : 내 점수의 최고점으로갱신됩니다");
@@ -301,7 +297,7 @@ public class ViewTest {
 	
 	public static void Level() throws IOException {
 		System.out.println("난이도 번호를 선택해주세요");
-		System.out.println("[1]상	[2]중	[3]하");
+		System.out.println("[1]상\t[2]중\t[3]하");
 		lv = br.readLine();
 		if (lv.equals("1")) {
 			score = 10;
@@ -332,7 +328,7 @@ public class ViewTest {
 			} mp3_1.play(path);
 			
 			System.out.print("정답입력>>");
-			System.out.print("[0]스킵		[1]초성힌트	[2]가수힌트>>");
+			System.out.print("[0]스킵\t[1]초성힌트\t[2]가수힌트>> ");
 			
 			ans3 = br.readLine();
 			if (ans3 != null) {

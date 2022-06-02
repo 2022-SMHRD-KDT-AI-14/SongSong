@@ -52,7 +52,7 @@ public class Rank {
 		try {
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
-			System.out.println("================상위 10명 랭킹================");
+			System.out.println("============================== TOP10랭킹 ==============================");
 			System.out.printf("%10s\t%10s\t%10s%n","ID", "SCORE", "RANK");
 			while (rs.next()) {
 				String id = rs.getString(1);
@@ -110,79 +110,6 @@ public class Rank {
 		}
 	}
 	
-
-//	public void scoreUpdate(MemberDTO dto, int SUM) { // 최종 sum 값을 해당 아이디에 score 값 갱신(새로 한 게임의 점수가 더 클 때만)
-//		int cnt =0;
-//		connectRank();
-////----------------------------------------------------------------------------------------
-////		sum = 2;
-//		String sql = "update member set score = ? where id = ?";
-//		try {
-//			psmt = conn.prepareStatement(sql);
-//			
-//			
-////			psmt.setString(1, SUM);
-//			psmt.setInt(1, SUM);
-//			psmt.setString(2, dto.getId());
-////			rs = psmt.executeQuery();
-//			cnt = psmt.executeUpdate();
-//			System.out.println(cnt);
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (rs != null) {
-//					rs.close();
-//				}
-//				if (psmt != null) {
-//					psmt.close();
-//				}
-//				if (conn != null) {
-//					conn.close();
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
-//		
-//	
-//	
-//	public void scoreUpdate1(MemberDTO dto, int total) { // 최종 sum 값을 해당 아이디에 score 값 갱신(새로 한 게임의 점수가 더 클 때만)
-//		connectRank();
-//		
-//		System.out.println("접속아이디: "+dto.getId());
-//		System.out.println("받은점수:"+total);
-//		
-//		
-//		String sql = "update rank set score= ? where id = ?";
-//		
-//		try {
-//			psmt = conn.prepareStatement(sql);
-//			psmt.setInt(1, total);
-//			psmt.setString(2, dto.getId());
-//			int cnt = psmt.executeUpdate();
-//			System.out.println("변화된 행의 수 "+cnt);
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			try {
-//				if (rs != null) {
-//					rs.close();
-//				}
-//				if (psmt != null) {
-//					psmt.close();
-//				}
-//				if (conn != null) {
-//					conn.close();
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
-
 
 	private void connectRank() {
 		try {
