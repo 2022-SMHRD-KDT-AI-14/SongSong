@@ -129,7 +129,7 @@ public class ViewTest {
 				System.out.println("[1]게임룰설명\t[2]난이도설정 후 게임시작\t[3]뒤로가기");
 				String menu2 = br.readLine();
 				if (menu2.equals("1")) {
-					System.out.println("게임시작 ▶ 난이도 선택 ▶ 문제풀기 ▶ 내 점수보기 ▶ 랭킹확인");
+					System.out.println("게임시작 ▶ 난이도 선택 ▶ 문제풀기 ▶ 랭킹확인");
 					System.out.println("→ 난이도별 점수배분방식 :한 문제당 상 7점, 중 5점, 하 3점\n  힌트 사용시 감점 1점");
 					System.out.println("→ 힌트종류 : ① 한글제목:초성힌트/영어제목:시작&끝 알파벳제시 \n  \t   ② 가수명힌트");
 					System.out.println("→ 문항수 : 20문제, 시간제한없고 모르는 문제는 패스가능");
