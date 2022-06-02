@@ -88,16 +88,22 @@ public class ViewTest {
 			}
 
 			while (stage1_1) {
-				System.out.println("[1]회원정보수정\t[2]게임이동\t[3]랭킹조회 ");
+				System.out.println("[1]회원정보수정\t[2]게임이동\t[3]랭킹조회\t[4]뒤로가기 ");
 				String menu1_1 = br.readLine();
 				if (menu1_1.equals("1")) {
-					System.out.println("[1]비밀번호 수정	[2]이름 수정");
+					System.out.println("[1]비밀번호 수정	[2]이름 수정  [3]회원탈퇴");
 					String P_N = br.readLine();
 					if (P_N.equals("1") || P_N.equals("2")) {
 						System.out.println("수정할 값>>");
 						String text = br.readLine();
 						dao.Adjust(dto, P_N, text);
-					} else {
+					}else if(P_N.equals("3")) {
+						
+						dao.delete(dto);
+						stage1_1 =false;
+						stage1 = true;
+					} 
+					else {
 						System.out.println("잘못 누르셨습니다.");
 					}
 				} else if (menu1_1.equals("2")) { // 게임
@@ -107,7 +113,12 @@ public class ViewTest {
 					System.out.println("랭킹조회"); // 혜수 메소드
 					rk.top10();
 
-				} else {
+				}else if (menu1_1.equals("4")) {
+					stage1_1= false;
+					stage1 =true;
+
+				}
+				else {
 					System.out.println("잘못입력, 다시선택해주세요!");
 				}
 
@@ -115,12 +126,16 @@ public class ViewTest {
 
 			while (stage2) {
 				System.out.println("=====게임 준비=====");
-				System.out.println("[1]게임룰설명\t[2]난이도설정 후 게임시작");
+				System.out.println("[1]게임룰설명\t[2]난이도설정 후 게임시작\t[3]뒤로가기");
 				String menu2 = br.readLine();
 				if (menu2.equals("1")) {
-					System.out.println("점수 배분 방식 : ~ ~");
-					System.out.println("정답은 띄어쓰기 없이, 영문의 경우 대문자만 허용");
-					System.out.println("어찌고 저찌고~");
+					System.out.println("게임시작 ▶ 난이도 선택 ▶ 문제풀기 ▶ 내 점수보기 ▶ 랭킹확인");
+					System.out.println("→ 난이도별 점수배분방식 :한 문제당 상 7점, 중 5점, 하 3점\n  힌트 사용시 감점 1점");
+					System.out.println("→ 힌트종류 : ① 한글제목:초성힌트/영어제목:시작&끝 알파벳제시 \n  \t   ② 가수명힌트");
+					System.out.println("→ 문항수 : 20문제, 시간제한없고 모르는 문제는 패스가능");
+					System.out.println("→ 정답작성시 주의사항 : 띄어쓰기X, 영어제목 : 대문자로 기입");
+					System.out.println("→ 랭킹 : 내 점수의 최고점으로갱신됩니다");
+
 				} else if (menu2.equals("2")) {
 					System.out.println("난이도 번호를 선택해주세요");
 					System.out.println("[1]상	[2]중	[3]하");
@@ -140,6 +155,10 @@ public class ViewTest {
 					} else {
 						System.out.println("난이도는 1/2/3중에서 선택해주세요");
 					}
+				} else if (menu2.equals("3")) { 
+						stage2= false;
+						stage1 =true;
+						stage1_1 =true;
 				} else {
 					System.out.println("잘못 입력하셨습니다.");
 				}
@@ -231,7 +250,8 @@ public class ViewTest {
 				String menu4 = br.readLine();
 				if (menu4.equals("1")) {
 					stage1 = true;
-				} else {
+					
+				} else { //종료
 					stage1 = false;
 				}
 			}

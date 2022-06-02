@@ -149,6 +149,33 @@ public class Member {
 		}
 	}
 
+	
+	// 회원탈퇴 메소드
+	public void delete(MemberDTO dto) {
+			connectMember();
+			// 3. SQL실행
+			String sql = "delete member where id=?";
+			try {
+				psmt = conn.prepareStatement(sql);
+				psmt.setString(1,dto.getId());
+				psmt.executeUpdate();
+				System.err.println(dto.getName() + "님 회원탈퇴 완료");
+			} catch (SQLException e) {
+				System.out.println("회원탈퇴 실패");
+			}
+			// 4. 종료
+			finally {
+				try {
+					if (psmt != null)
+						psmt.close();
+					if (conn != null)
+						conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
 	// 동적로딩, DB연결 메소드
 	private void connectMember() {
 		// 1. 동적로딩
@@ -172,39 +199,5 @@ public class Member {
 			System.out.println("DB연결 실패");
 		}
 	}
-
-	
-//	//회원가입시 랭크DB 자동업데이트
-//	public void updateForRank(MemberDTO dto) {
-//
-//		connectMember();
-//		// 3. SQL실행
-//		String id = dto.getId();
-//		String sql = "insert into rank values(?,null)";
-//		try {
-//			psmt = conn.prepareStatement(sql);
-//			psmt.setString(1, id);
-//			psmt.executeUpdate();
-//			System.err.println("업데이트 완료");
-//		} catch (SQLException e) {
-//			System.out.println("업데이트 실패");
-//		}
-//
-//		// 4. 종료
-//		finally {
-//			try {
-//				if (psmt != null)
-//					psmt.close();
-//				if (conn != null)
-//					conn.close();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//
-//		}
-//
-//	}
-//	
-//	
 
 }
