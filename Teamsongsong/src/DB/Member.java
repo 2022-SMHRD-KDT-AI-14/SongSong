@@ -23,13 +23,12 @@ public class Member {
 		String id = dto.getId();
 		String pw = dto.getPw();
 		String name = dto.getName();
-		String sql = "insert into member values(?,?,?,?)";
+		String sql = "insert into member values(?,?,?,0)";
 		try {
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
 			psmt.setString(2, pw);
 			psmt.setString(3, name);
-			psmt.setString(4, "");
 			psmt.executeUpdate();
 			System.err.println(name + "님~ 가입을 축하합니다^^");
 //			updateForRank(dto);
