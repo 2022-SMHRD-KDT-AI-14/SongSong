@@ -36,6 +36,7 @@ public class ViewTest {
 	static boolean stage4 = false;
 	static boolean test = false;
 	static String ans3;
+	static float convert=0;
 	
 	public static void main(String[] args) throws IOException {
 		art();
@@ -109,9 +110,10 @@ public class ViewTest {
 	public static void STAGE1() throws IOException {
 		if (mp3.isPlaying())
 			mp3.stop();
-		mp3.play("C:/Users/smhrd/Desktop/MP3/effect/오프닝.mp3");
+		mp3.play(".\\music\\effect\\오프닝.mp3");
 		String menu = br.readLine(); // 성능향상을위해 버퍼리더사용
-		if (menu.equals("1")) {
+		if (menu.equals("1")) 
+		{
 			System.out.print("id입력>>");
 			dto.setId(br.readLine());
 			System.out.print("pw입력>>");
@@ -243,8 +245,8 @@ public class ViewTest {
 	public static void STAGE3_1() throws IOException{
 		Calcu();// 최종 점수산출 메서드
 
-		if (rk.scoreput(dto) < total) { // 전 점수와 비교해서 큰 값으로 값 갱신
-			rk.scoreUpdate(dto, total);
+		if (rk.scoreput(dto) < convert) { // 전 점수와 비교해서 큰 값으로 값 갱신
+			rk.scoreUpdate(dto, convert);
 		}
 
 		System.out.println("재도전하시겠습니까?  ");
@@ -326,7 +328,6 @@ public class ViewTest {
 			if (mp3_1.isPlaying()) {
 				mp3_1.stop(); // 왜 자꾸 노래가 들릴까..
 			} mp3_1.play(path);
-			
 			System.out.print("정답입력>>");
 			System.out.print("[0]스킵\t[1]초성힌트\t[2]가수힌트>> ");
 			
@@ -363,12 +364,12 @@ public class ViewTest {
 			mp3.stop();
 		}
 		// 여기에
-		mp3.play("C:/Users/smhrd/Desktop/MP3/effect/관짝밈.mp3");
+		mp3.play(".\\music\\effect\\관짝밈.mp3");
 		if (minus < 0)
 			minus = 0;
 		sum = cnt * score;
 		total = sum + minus;
-		float convert = (float) Math.round((total * (60 / gap)) * 100) / 100;
+		convert = (float) Math.round((total * (60 / gap)) * 100) / 100;
 		System.out.println("총점은: " + total + "점");
 		System.out.println("맞은개수: " + cnt + "개");
 		System.out.println("풀이시간: " + gap + "초");

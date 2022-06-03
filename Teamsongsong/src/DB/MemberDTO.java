@@ -4,7 +4,7 @@ public class MemberDTO {
 	private String id;
 	private String pw;
 	private String name;
-	private int score;
+	private float score;
 	
 	
 	public MemberDTO(String id, String pw, String name) {
@@ -52,10 +52,10 @@ public class MemberDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getScore() {
+	public float getScore() {
 		return score;
 	}
-	public void setScore(int score) {
+	public void setScore(float score) {
 		this.score = score;
 	}
 	

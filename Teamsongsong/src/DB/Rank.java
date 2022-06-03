@@ -5,15 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 public class Rank {
-	int score =0;
+	float score =0;
 	int sum =0;
 	Connection conn;
 	PreparedStatement psmt;
 	ResultSet rs;
 	int cnt = 0;
-	int result = 0;
+	float result = 0;
 	
-	public int scoreput(MemberDTO dto) {    // 로그인 한 아이디의 갱신 전 score값 result 값으로 반환
+	public float scoreput(MemberDTO dto) {    // 로그인 한 아이디의 갱신 전 score값 result 값으로 반환
 		connectRank();
 
 		String sql = "select score from member where id = ?";
@@ -56,7 +56,7 @@ public class Rank {
 			System.out.printf("%10s\t%10s\t%10s%n","ID", "SCORE", "RANK");
 			while (rs.next()) {
 				String id = rs.getString(1);
-				int score = rs.getInt(2);
+				float score = rs.getFloat(2);
 				int rr = rs.getInt(3);
 				
 				System.out.printf("%10s\t%10s\t%10s\t%n", id, score, rr );
@@ -80,16 +80,16 @@ public class Rank {
 		}
 	}
 
-	public void scoreUpdate(MemberDTO dto, int total) { // 최종 sum 값(변수 jhs)을 해당 아이디에 score 값 갱신 //(새로 한 게임의 점수가 더 클 때만)
+	public void scoreUpdate(MemberDTO dto, float convert) { // 최종 sum 값(변수 jhs)을 해당 아이디에 score 값 갱신 //(새로 한 게임의 점수가 더 클 때만)
 		connectRank();
 
 		String sql = "update member set score = ? where id = ?";
 		try {
 			String id = dto.getId();
 			psmt = conn.prepareStatement(sql);
-			psmt.setInt(1, total);
+			psmt.setFloat(1, convert);
 			psmt.setString(2, id);
-			cnt = psmt.executeUpdate();
+			psmt.executeUpdate();
 
 		} catch (SQLException e) {
 			e.printStackTrace();

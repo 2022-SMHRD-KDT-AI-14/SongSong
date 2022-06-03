@@ -26,7 +26,7 @@ public class MusicList {
 		String path = null;
 		connectMusic();
 		String sql = "select path from (select * from musiclist where diff = ? order by dbms_random.value) where rownum <= 1";
-
+		
 		try {
 			psmt = conn.prepareStatement(sql);
 			if (str.equals("1")) {
@@ -84,8 +84,7 @@ public class MusicList {
 	}
 
 	// 음악재생 메소드
-	public void play(String path) {
-
+	public void play(String path){
 		mp3 = new MP3Player();
 		if (mp3.isPlaying()) {
 			mp3.stop();
